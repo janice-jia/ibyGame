@@ -1,0 +1,195 @@
+@charset "UTF-8";
+/**
+* this is a base stylesheet
+*/
+/**
+all colors
+*/
+/*public width*/
+$line-color:#c4c4c4;//边框灰色
+$background-black:#272727;//背景黑色or黑色字体
+$background-gray:#f5f9fa;//底色浅灰
+$background-blue:#0078ff;//蓝色背景
+$fc-gray:#b9b9b9;//字体蓝色
+
+html {
+    background: white;
+    color: black;
+}
+
+html, body{
+    margin:0;
+    height:100%;
+}
+
+body{
+    background-color: $background-gray;
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, hr, button, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    margin: 0;
+    padding: 0;
+}
+
+body, button, input, select, textarea {
+    font: 12px \5b8b\4f53,arial,sans-serif;
+}
+
+input, select, textarea {
+    font-size: 100%;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+th {
+    text-align: inherit;
+}
+
+fieldset, img {
+    border: none;
+}
+
+iframe {
+    display: block;
+}
+
+abbr, acronym {
+    border: none;
+    font-variant: normal;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+address, caption, cite, code, dfn, em, th, var {
+    font-style: normal;
+    font-weight: 500;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+caption, th {
+    text-align: left;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: 500;
+}
+
+q:before, q:after {
+    content: '';
+}
+
+sub, sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+sup {
+    top: -0.5em;
+}
+
+sub {
+    bottom: -0.25em;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+ins, a {
+    text-decoration: none;
+}
+
+a:focus, *:focus {
+    outline: none;
+}
+
+.clearfix:before, .clearfix:after {
+    content: "";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+    overflow: hidden;
+}
+
+.clearfix {
+    zoom: 1;
+    /* for ie6 & ie7 */
+}
+
+.clear {
+    clear: both;
+    display: block;
+    font-size: 0;
+    height: 0;
+    line-height: 0;
+    overflow: hidden;
+}
+
+.hide {
+    display: none;
+}
+
+.block {
+    display: block;
+}
+
+.fl, .fr {
+    display: inline;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+body {
+    background-color: $background-gray;
+    font: 14px "Microsoft YaHei",Arial,"Helvetica Neue","Hiragino Sans GB",Simsun,sans-self;
+    min-height: 480px;
+    color: #595757;
+}
+
+input{
+    font: 12px "Microsoft YaHei",Arial,"Helvetica Neue","Hiragino Sans GB",Simsun,sans-self;
+}
+
+img {
+    width: 100%;
+}
+
+a:focus, a:hover {
+    text-decoration: none;
+}
+
+input:focus {
+    outline: none;
+}
+
+.center {
+    text-align: center;
+}
+
+.btn {
+    padding: 4px 12px;
+}
+
+header {
+    width: 100%;
+}
+
