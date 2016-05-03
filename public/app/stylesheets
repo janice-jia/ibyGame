@@ -1,0 +1,23 @@
+/*
+Errno::ENOENT: No such file or directory @ rb_sysopen - ./public/app/sass
+
+Backtrace:
+D:/anzhuang/Ruby21-x64/lib/ruby/gems/2.1.0/gems/sass-3.4.19/lib/sass/plugin/compiler.rb:482:in `read'
+D:/anzhuang/Ruby21-x64/lib/ruby/gems/2.1.0/gems/sass-3.4.19/lib/sass/plugin/compiler.rb:482:in `update_stylesheet'
+D:/anzhuang/Ruby21-x64/lib/ruby/gems/2.1.0/gems/sass-3.4.19/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
+D:/anzhuang/Ruby21-x64/lib/ruby/gems/2.1.0/gems/sass-3.4.19/lib/sass/plugin/compiler.rb:209:in `each'
+D:/anzhuang/Ruby21-x64/lib/ruby/gems/2.1.0/gems/sass-3.4.19/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
+D:/anzhuang/Ruby21-x64/lib/ruby/gems/2.1.0/gems/sass-3.4.19/lib/sass/plugin/compiler.rb:293:in `watch'
+D:/anzhuang/Ruby21-x64/lib/ruby/gems/2.1.0/gems/sass-3.4.19/lib/sass/plugin.rb:108:in `method_missing'
+D:/anzhuang/Ruby21-x64/lib/ruby/gems/2.1.0/gems/sass-3.4.19/lib/sass/exec/sass_scss.rb:381:in `watch_or_update'
+D:/anzhuang/Ruby21-x64/lib/ruby/gems/2.1.0/gems/sass-3.4.19/lib/sass/exec/sass_scss.rb:51:in `process_result'
+D:/anzhuang/Ruby21-x64/lib/ruby/gems/2.1.0/gems/sass-3.4.19/lib/sass/exec/base.rb:52:in `parse'
+D:/anzhuang/Ruby21-x64/lib/ruby/gems/2.1.0/gems/sass-3.4.19/lib/sass/exec/base.rb:19:in `parse!'
+D:/anzhuang/Ruby21-x64/lib/ruby/gems/2.1.0/gems/sass-3.4.19/bin/sass:13:in `<top (required)>'
+D:/anzhuang/Ruby21-x64/bin/sass:23:in `load'
+D:/anzhuang/Ruby21-x64/bin/sass:23:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Errno::ENOENT: No such file or directory @ rb_sysopen - ./public/app/sass"; }

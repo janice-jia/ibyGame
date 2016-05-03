@@ -11,42 +11,88 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/base.css' />
     <link rel='stylesheet' href='/stylesheets/index.css' />
-    <link rel='stylesheet' href='/stylesheets/i-eBei.css' />
-    <script src="/js/jquery.min.js"></script>
+    <script src="/js/zepto.min.js"></script>
 </head>
 <body>
-<div id="luckydraw-details" ng-controller="luckydraw">
-    <div class="draw-bg">
-        <img src="/images/luckydraw/luckydraw.jpg" alt="">
-    </div>
-    <div class="draw-con-bg">
-        <img src="/images/luckydraw/draw.png" alt="">
+<div class="luckydraw-details">
+    <div class="iby-draw-tit">
+        <img src="/images/index/Title.png" alt="">
     </div>
     <div class="draw-con">
         <ul id="draw-con-ul">
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li class="draw-click" ng-click="checkDrawNum($event)" title="开始抽奖"></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
+
+            <li class="draw-li-bg">
+                000
+                <img src="<%= lotteryList[0].imgUrl %>" alt="">0
+                <p></p>
+            </li>
+            <li class="draw-li-bg">
+                111
+                <img src="<%= lotteryList[1].imgUrl %>" alt="">
+                <p></p>
+            </li>
+            <li class="draw-li-bg">
+                222
+                <img src="<%= lotteryList[2].imgUrl %>" alt="">
+                <p></p>
+            </li>
+            <li class="draw-li-bg">
+                333
+                <img src="<%= lotteryList[3].imgUrl %>" alt="">
+                <p></p>
+            </li>
+            <li class="draw-li-bg">
+                11，11
+                <img src="<%= lotteryList[11].imgUrl %>" alt="">
+                <p></p>
+            </li>
+            <li class="draw-li-bg draw-click" title="开始抽奖">
+                <div class="luck-draw_btn1">
+                    <a href="javascript:;" onclick="isChangeN()"><img id="luck-draw_btn1" src="/images/luckydraw/luck-draw_btn.png" alt=""></a>
+                </div>
+            </li>
+            <li class="draw-li-bg">
+                444
+                <img src="<%= lotteryList[4].imgUrl %>" alt="">
+                <p></p>
+            </li>
+            <li class="draw-li-bg">
+                10,10
+                <img src="<%= lotteryList[10].imgUrl %>" alt="">
+                <p></p>
+            </li>
+            <li class="draw-li-bg draw-click" title="继续抽奖">
+                <div class="luck-draw_btn2">
+                    <a id="luck-draw_btn2" href="/game/start"><img src="/images/luckydraw/Go-on.png" alt=""></a>
+                </div>
+            </li>
+            <li class="draw-li-bg">
+                555
+                <img src="<%= lotteryList[5].imgUrl %>" alt="">
+                <p></p>
+            </li>
+            <li class="draw-li-bg">
+                999
+                <img src="<%= lotteryList[9].imgUrl %>" alt="">
+                <p></p>
+            </li>
+            <li class="draw-li-bg">
+                888
+                <img src="<%= lotteryList[8].imgUrl %>" alt="">
+                <p></p>
+            </li>
+            <li class="draw-li-bg">
+                777
+                <img src="<%= lotteryList[7].imgUrl %>" alt="">
+                <p></p>
+            </li>
+            <li class="draw-li-bg">
+                666
+                <img src="<%= lotteryList[6].imgUrl %>" alt="">
+                <p></p>
+            </li>
         </ul>
-        <div class="draw-cur">
-            <ul>
-                <li class="mr10 upload-li">
-                    <!--                <a href="#1" title="继续助力">&nbsp;</a>-->
-                    <div class="upload-image" ng-show="isBind && isLoggedIn">
-                        <div class="upload-image" ng-show="!isAndroid" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" ngf-multiple="false"></div>
-                        <input ng-show="isAndroid" class="weChatInput" type="file" accept="image/*" fileread="file" onclick="_hmt.push(['_trackEvent', '底部导航', '参赛']);"/>
-                    </div>
-                <li><a href="#/" title="返回首页">&nbsp;</a></li>
-            </ul>
-        </div>
+        <div class="clear"></div>
     </div>
 
     <div class="draw-list">
@@ -86,85 +132,218 @@
             <div style="clear:both"></div>
         </div>
     </div>
+
+    <!--谢谢参与  start-->
+    <div class="draw-msg-box" id="drawThank">
+        <div class="draw-msg">
+            <div class="draw-msg-tit">
+                <img src="/images/luckydraw/Top-decoration_thanks.png" alt="">
+            </div>
+            <div class="draw-msg-img">
+                <img src="/images/luckydraw/no-draw.jpg" alt="">
+            </div>
+            <div class="draw-msg-con center">
+                <p>心若在梦就在，天地间还有真爱</p>
+                <p>看成败人生豪迈，只不过</p>
+            </div>
+            <div class="draw-msg-btn">
+                <a href="javascript:;" onclick="backHome()"><img src="/images/luckydraw/Again-from-the-beginning.png" alt=""></a>
+            </div>
+        </div>
+    </div>
+    <!--谢谢参与  end-->
+
+    <!--抽中奖品  start-->
+    <div class="draw-msg-box" id="drawInfo">
+        <div class="draw-msg">
+            <div class="draw-msg-tit">
+                <img src="/images/luckydraw/Top-decoration.png" alt="">
+            </div>
+            <div class="draw-msg-input">
+                <input type="tel" name="tel" id="mp" placeholder="请输入您的领奖手机号">
+                <textarea name="" id="address" cols="30" rows="10" placeholder="请输入您的领奖地址"></textarea>
+            </div>
+            <div class="draw-msg-con-sm">
+                <p>声明：</p>
+                <p>1、“爱版易”全程保护您的隐私绝不外泄；</p>
+                <p>2、信息输入不全会导致您无法及时收到奖励，填写后请务必核对；</p>
+                <p>3、“爱版易”微信公众号收到您的截屏并核对信息后才会发奖；</p>
+                <p>4、该活动解释权归“爱版易”官方所有。</p>
+            </div>
+            <div class="draw-msg-btn">
+                <a href="javascript:;" onclick="subLogs()"><img src="/images/luckydraw/Submit_btn.png" alt=""></a>
+            </div>
+        </div>
+    </div>
+    <!--抽中奖品  end-->
+
+    <!--抽中奖品兑换码  start-->
+    <div class="draw-msg-box" id="drawCDkey">
+        <div class="draw-msg">
+            <div class="draw-msg-tit">
+                <img src="/images/luckydraw/Top-decoration.png" alt="">
+            </div>
+            <div class="draw-msg-con-dh">
+                <p class="center"><span class="fc1">兑换码：</span><span class="fc2">10010</span></p>
+                <p>请截屏并发到“爱版易”公众号兑奖，兑奖需要您留手机号，所留手机号仅用于活动奖，我们承诺绝不将您的联系方式泄露给第三方。</p>
+            </div>
+            <div class="draw-msg-img">
+                <img src="/images/luckydraw/no-draw.jpg" alt="">
+            </div>
+            <div class="draw-msg-btn">
+                <a href="/game/start"><img src="/images/luckydraw/Again.png" alt=""></a>
+            </div>
+        </div>
+    </div>
+    <!--抽中奖品兑换码  end-->
+
+
+    <!--提示分享  start-->
+    <div class="draw-msg-box" id="drawShare">
+        <div class="shareImg">
+            <img src="/images/luckydraw/Brow_icon.png" alt="">
+        </div>
+    </div>
+    <!--提示分享  end-->
 </div>
 <style>
     #marquee{line-height: 20px;margin:0}
 </style>
 <script>
-
-    var drawFalg = true;
     var drawIndex = 0;
     var timeIndex = 1;
-    var drawArr = [0, 1, 2, 3, 6, 10, 9, 8, 7, 4];
+    var drawArr = [0, 1, 2, 3, 6, 9, 13, 12, 11, 10, 7, 4];
     var drawList = $('#draw-con-ul li');
+    var luckyStop = 0;
     var drawOn = 0;
-    drawResults = [{code:'ZZZZZ'}];
-
-    if(drawResults){
-        switch(drawResults[0].code){
-            case '1032':
-                drawOn = 321;       //E农春天9折优惠券
-                break;
-            case 'ZZZZZ':
-                drawOn = 331;       //谢谢参与
-                break;
-            case 'Z0002':
-                drawOn = 341;       //书（38）
-                break;
-            case '10008':
-                drawOn = 351;       //本来生活50元年货券
-                break;
-            case '10003':
-                drawOn = 361;       //华为手机
-                break;
-            case '1026':
-                drawOn = 371;       //WHS沃海森200元代金券
-                break;
-            case '10011':
-                drawOn = 381;       //温可馨肚皮舞培训学校500元体验卡或3000元助学基金
-                break;
-            case 'Z0001':
-                drawOn = 391;       //书（58各）
-                break;
-            case '10009':
-                drawOn = 401;       //百度外卖随机代金券
-                break;
-            case '10001':
-                drawOn = 411;       //苏泊尔真入味无涂层微压炒锅YW30C1
-                break;
-            default:
-                drawOn = 0;
-                break;
-
-        }
+    //判断次数
+    function isChangeN(){
+        $.ajax({
+            type:"GET",
+            url:"/game/changeNum",
+            data:{activityLogId: '<%= activityLogId %>'},
+            success:function(data){
+                data = JSON.parse(data);
+                var changeN = data.changeN;
+                if(changeN == 0){
+                    luckydraw();
+                }else if(changeN == 1 && data.shareN){
+                    alert('第二次抽奖');
+                    luckydraw();
+                }else if(changeN == 1 && !data.shareN){
+                    alert('快去分享吧，参与第二次抽奖');
+                }else if(changeN > 1){
+                    alert('您已经没有抽奖机会啦！！！');
+                }
+            }
+        });
     }
 
-    eachDraw();
+
+    //抽奖方法
+    function luckydraw() {
+        $("#luck-draw_btn2").attr('href',"javascript:;")
+        timeIndex = 1;
+            $.ajax({
+                type: 'POST',
+                url: '/game/luckyStop',
+                success: function (data) {
+                    //处理中奖奖品位置，顺时针0-11
+                    luckyStop = data;
+
+                    switch (luckyStop.drawStop) {
+                        case 0:
+                            drawOn = 272;       //0
+                            break;
+                        case 1:
+                            drawOn = 282;       //1
+                            break;
+                        case 2:
+                            drawOn = 292;       //2
+                            break;
+                        case 3:
+                            drawOn = 302;       //3
+                            break;
+                        case 4:
+                            drawOn = 312;       //4
+                            break;
+                        case 5:
+                            drawOn = 322;       //5
+                            break;
+                        case 6:
+                            drawOn = 332;       //6
+                            break;
+                        case 7:
+                            drawOn = 342;       //7
+                            break;
+                        case 8:
+                            drawOn = 352;       //8
+                            break;
+                        case 9:
+                            drawOn = 362;      //9
+                            break;
+                        case 10:
+                            drawOn = 372;      //10
+                            break;
+                        case 11:
+                            drawOn = 382;      //11
+                            break;
+                        case 12:
+                            drawOn = 392;      //12
+                            break;
+                        default:
+                            drawOn = 382;         //10
+                            break;
+                    }
+                    eachDraw(luckyStop);
+                }
+            });
+            $("#luck-draw_btn1").attr("src","/images/luckydraw/Again_btn.png");
+    }
 
 
     //抽奖过程
-    function eachDraw(){
+    function eachDraw(drawStop){
         timeIndex+=10;
         if(timeIndex<drawOn){
             setTimeout(function(){
-                if(drawIndex == 10){
+                if(drawIndex == 13){
                     drawIndex = 0;
                 }
-                $(drawList[drawArr[drawIndex]]).attr('class','draw-default');
-                $(drawList[drawArr[drawIndex]]).siblings().removeClass('draw-default');
-
-                eachDraw();
+                $(drawList[drawArr[drawIndex]]).find('p').addClass('draw-default');
+                $(drawList[drawArr[drawIndex]]).siblings().find('p').removeClass('draw-default');
+                eachDraw(drawStop);
                 drawIndex ++;
             },timeIndex);
         }else{
             setTimeout(function(){
-                draw = true;
-                drawFalg = true;
+                openDraw = true;
+                $("#luck-draw_btn2").attr('href',"/game/start");
+
+                //抽奖过程结束
+                if(drawStop){
+                    console.info("drawStop111111111",drawStop);
+                    //更改抽奖次数
+                    $.ajax({
+                        type:"POST",
+                        url:"/game/changeNum",
+                        data:{activityLogId:'<%= activityLogId %>'},
+                        success: function (data) {
+                            
+                        }
+                    });
+
+                    if(drawStop.code == "Z9999" || drawStop.code == "Z9998" || drawStop.code == "Z9997" || drawStop.code == ""){
+                        $("#drawThank").show();
+                    }else{
+                        $("#drawInfo").show();
+                    }
+                }
             },1000);
         }
     }
 
-
+    //中奖纪录滚动效果
     $(function(){
         var marqueeH = $('#marquee ul').children * 20;
         var marquee = document.getElementById('marquee');
@@ -173,7 +352,7 @@
         var offset=0;
         var scrollheight =marquee.offsetHeight;
         var firstNode = marquee.children[0].cloneNode(true);
-        marquee.appendChild(firstNode);//还有这里
+        marquee.appendChild(firstNode);
         setInterval(function(){
             if(offset == scrollheight){
                 offset = 0;
@@ -183,12 +362,26 @@
         },50);
     });
 
+    //谢谢参与提示框 需判断是第一个抽奖还是第二次抽奖，第一次抽奖点击“从头再来”返回当前页，第二次抽奖点击“从头再来”返回活动首页
+    function backHome(){
+        alert("此处需判断是第一次抽奖还是第二次抽奖");
+    }
+
+    //抽中奖品收集手机号和收货地址
+    function subLogs(){
+
+        if($("#address").val() == "" || $("#mp").val() == "" ){
+            alert("请输入手机号和收货地址");
+        }else {
+            alert("ok");
+            $("#drawInfo").show();
+            //存储中奖纪录信息
+
+
+            //显示兑换码弹层
+            $("#drawCDkey").show();
+        }
+    }
 </script>
-
-
-
 </body>
 </html>
-<script>
-    console.info('times',window.localStorage.getItem('times'));
-</script>
