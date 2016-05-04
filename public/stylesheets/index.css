@@ -309,6 +309,12 @@
             color: #f5ba1f; }
           .luckydraw-details .draw-msg .draw-msg-con-dh p span.fc2 {
             color: #785700; }
+    .luckydraw-details .draw-msg .draw-msg-prize {
+      text-align: center;
+      padding: 22px;
+      line-height: 25px;
+      color: #ff7900;
+      font-size: 14px; }
     .luckydraw-details .draw-msg .draw-msg-btn {
       text-align: center;
       margin: 20px 0; }
