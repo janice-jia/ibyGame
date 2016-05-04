@@ -203,15 +203,19 @@
             data:{activityLogId: '<%= activityLogId %>'},
             success:function(data){
                 data = JSON.parse(data);
-                var changeN = data.changeN;
-                if(changeN == 0){
-                    luckydraw();
-                }else if(changeN == 1 && data.shareN){
-                    //第二次抽奖
-                    luckydraw();
-                }else if(changeN == 1 && !data.shareN){
-                    $('#drawShare').show();
-                }else if(changeN > 1){
+                if(data){
+                    var changeN = data.changeN;
+                    if(changeN == 0){
+                        luckydraw();
+                    }else if(changeN == 1 && data.shareN){
+                        //第二次抽奖
+                        luckydraw();
+                    }else if(changeN == 1 && !data.shareN){
+                        $('#drawShare').show();
+                    }else if(changeN > 1){
+                        alert('您已经没有抽奖机会啦！！！');
+                    }
+                }else{
                     alert('您已经没有抽奖机会啦！！！');
                 }
             }
