@@ -9,7 +9,7 @@ var signature = require('../module/signature.js');
 var async = require('async');
 
 
-
+//拼图
 router.get('/start', function(req, res, next) {
     var url = req.protocol + '://' + req.host + req.baseUrl + req.path; //获取当前url
     async.series({
@@ -32,6 +32,7 @@ router.get('/start', function(req, res, next) {
 
 });
 
+//查看规则
 router.get('/rules', function(req, res, next) {
     res.render('rules', {title: '抽奖规则'});
 });
@@ -81,19 +82,27 @@ router.post('/addlog', function(req, res, next) {
     });
 });
 
+
+//抽奖页面
 router.post('/luckydraw', function(req, res, next) {
     console.info("req.body",req.body);
     var totalTimes = req.body.totalTimes;
     var activityLogId = req.body.activityLogId;
     var url = req.protocol + '://' + req.host + req.baseUrl + req.path; //获取当前url
     async.series({
-        /* 获取项目动态 */
+        /* 微信签名 */
         signatureMap:function(callback){
             signature.sign(url,function(signatureMap){
                 signatureMap.appId = wechat_cfg.appid;
                 //console.info('signatureMap=========',signatureMap);
                 callback(null, signatureMap);
             });
+        },
+        drawList:function(callback){
+            mongodb.collection('activity_awd_logs').find().toArray(function(err, data){
+                console.info('data=========',data);
+                callback(null,data);
+            })
         }
     },function(err, results){
         if(activityLogId && totalTimes){
@@ -216,7 +225,8 @@ router.post('/luckydraw', function(req, res, next) {
                         lotteryList:data,       //奖品list
                         totalTimes:totalTimes,   //拼图总时间
                         signatureMap:results.signatureMap,//微信签名信息
-                        activityLogId:activityLogId   //当前用户拼图_id
+                        activityLogId:activityLogId,   //当前用户拼图_id
+                        drawList:results.drawList //中奖记录
                     });
                 }
             );
@@ -228,6 +238,7 @@ router.post('/luckydraw', function(req, res, next) {
 
 });
 
+//根据抽奖算法返回抽奖结果
 router.post('/luckyStop', function(req, res, next) {
 
     mongodb.collection('sys_parameter').find().toArray(function(err, parameterData){
@@ -301,8 +312,6 @@ router.post('/luckyStop', function(req, res, next) {
             );
         }
     });
-
-
 
 });
 

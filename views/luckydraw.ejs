@@ -23,27 +23,22 @@
         <ul id="draw-con-ul">
 
             <li class="draw-li-bg">
-                000
                 <img src="<%= lotteryList[0].imgUrl %>" alt="">0
                 <p></p>
             </li>
             <li class="draw-li-bg">
-                111
                 <img src="<%= lotteryList[1].imgUrl %>" alt="">
                 <p></p>
             </li>
             <li class="draw-li-bg">
-                222
                 <img src="<%= lotteryList[2].imgUrl %>" alt="">
                 <p></p>
             </li>
             <li class="draw-li-bg">
-                333
                 <img src="<%= lotteryList[3].imgUrl %>" alt="">
                 <p></p>
             </li>
             <li class="draw-li-bg">
-                11，11
                 <img src="<%= lotteryList[11].imgUrl %>" alt="">
                 <p></p>
             </li>
@@ -53,12 +48,10 @@
                 </div>
             </li>
             <li class="draw-li-bg">
-                444
                 <img src="<%= lotteryList[4].imgUrl %>" alt="">
                 <p></p>
             </li>
             <li class="draw-li-bg">
-                10,10
                 <img src="<%= lotteryList[10].imgUrl %>" alt="">
                 <p></p>
             </li>
@@ -68,27 +61,22 @@
                 </div>
             </li>
             <li class="draw-li-bg">
-                555
                 <img src="<%= lotteryList[5].imgUrl %>" alt="">
                 <p></p>
             </li>
             <li class="draw-li-bg">
-                999
                 <img src="<%= lotteryList[9].imgUrl %>" alt="">
                 <p></p>
             </li>
             <li class="draw-li-bg">
-                888
                 <img src="<%= lotteryList[8].imgUrl %>" alt="">
                 <p></p>
             </li>
             <li class="draw-li-bg">
-                777
                 <img src="<%= lotteryList[7].imgUrl %>" alt="">
                 <p></p>
             </li>
             <li class="draw-li-bg">
-                666
                 <img src="<%= lotteryList[6].imgUrl %>" alt="">
                 <p></p>
             </li>
@@ -98,38 +86,18 @@
 
     <div class="draw-list">
         <div class="draw-list-con">
-            <ul class="list-ul1 list-h-25">
-                <li class="list-w-30">中奖人</li>
-                <li class="list-w-30">中奖时间</li>
-                <li class="list-w-40">奖品</li>
-            </ul>
+            <div class="draw-list-tit">中奖纪录</div>
             <div class="list-line"></div>
             <div style="height:70px; overflow:hidden;">
                 <div class="drawList" id="marquee">
+                    <% drawList.forEach(function(draw){ %>
                     <ul class="list-ul2">
-                        <li class="list-w-30" ng-bind="draw.name">小笨蛋</li>
-                        <li class="list-w-30">2016.04.22</li>
-                        <li class="list-w-40" ng-bind="draw.lotteryName">华为手机</li>
+                        <li class="list-w-50"><%= draw.userName %></li>
+                        <li class="list-w-50 list-prize"><%= draw.lttrNm %></li>
                     </ul>
-                    <ul class="list-ul2">
-                        <li class="list-w-30" ng-bind="draw.name">小笨蛋</li>
-                        <li class="list-w-30">2016.04.22</li>
-                        <li class="list-w-40" ng-bind="draw.lotteryName">华为手机</li>
-                    </ul>
-                    <ul class="list-ul2">
-                        <li class="list-w-30" ng-bind="draw.name">小笨蛋</li>
-                        <li class="list-w-30">2016.04.22</li>
-                        <li class="list-w-40" ng-bind="draw.lotteryName">华为手机</li>
-                    </ul>
-                    <ul class="list-ul2">
-                        <li class="list-w-30" ng-bind="draw.name">小笨蛋</li>
-                        <li class="list-w-30">2016.04.22</li>
-                        <li class="list-w-40" ng-bind="draw.lotteryName">华为手机</li>
-                    </ul>
+                    <% }) %>
                 </div>
             </div>
-
-
             <div style="clear:both"></div>
         </div>
     </div>

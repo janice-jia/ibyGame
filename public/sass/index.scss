@@ -236,51 +236,52 @@
         height: auto;
     }
     .draw-list-con{
-        border: 2px solid #85cb34;
-        background: rgba(255, 255, 255, 0.4);
+        background: #a04c04;
         max-height: 150px;
         overflow: hidden;
+        .draw-list-tit{
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            color: #f5ba1f;
+        }
+        .list-line{
+            border: 1px solid #b5611b;
+        }
+        ul{
+            padding: 0;
+            margin: 0;
+            &.list-ul2{
+                padding: 5px 0;
+            }
+            .list-ul2 li{
+                color: #fff;
+                font-size: 14px;
+                height: 20px;
+                line-height: 20px;
+                font-family: "Microsoft Yahei";
+            }
+            li{
+                padding: 0 0 0 10px;
+                margin: 0;
+                float: left;
+                list-style: none;
+                text-align: left;
+                overflow: hidden;
+                color: #ffffff;
+                &.list-w-50{
+                    width: 30%;
+                }
+                &.list-w-50{
+                    width: 40%;
+                }
+                &.list-prize{
+                    color: #f5ba1f;
+                }
+            }
+        }
     }
-    .draw-list-con ul{
-        padding: 0;
-        margin: 0;
-    }
-    .draw-list-con ul li{
-        padding: 0;
-        margin: 0;
-        float: left;
-        list-style: none;
-        text-align: center;
-        overflow: hidden;
-    }
-    .list-line{
-        border: 1px solid #85cb34;
-    }
-    .draw-list-con ul.list-ul1 li{
-        color: #484848;
-        font-size: 14px;
-        font-family: "Microsoft Yahei";
-    }
-    .draw-list-con ul.list-ul2{
-        padding: 5px 0;
-    }
-    .draw-list-con ul.list-ul2 li{
-        color: #fff;
-        font-size: 14px;
-        height: 20px;
-        line-height: 20px;
-        font-family: "Microsoft Yahei";
-    }
-    .draw-list-con ul.list-h-25{
-        height: 25px;
-        line-height: 25px;
-    }
-    .draw-list-con ul li.list-w-30{
-        width: 30%;
-    }
-    .draw-list-con ul li.list-w-40{
-        width: 40%;
-    }
+
     .upload-li{
         position: relative;
     }
@@ -340,7 +341,6 @@
         height: 100%;
         width: 100%;
         background: rgba(0, 0, 0,0.6);
-
     }
 
     .shareImg{
@@ -483,3 +483,19 @@
     width: 50%;
 }
 /*抽奖 end*/
+
+
+//奖励规则start
+.iby-rules{
+    width: 100%;
+    height: 100%;
+    background: url("/images/luckydraw/BG.png") no-repeat;
+    background-size: 100% 100%;
+    img{
+        width: 90%;
+        bottom: 55px;
+        position: fixed;
+        left: 5%;
+    }
+}
+//奖励规则end
