@@ -1,8 +1,6 @@
 var express = require('express');
-var mongodb = require('../module/mongodb.js');
+var session = require('express-session');
 var router = express.Router();
-var wechat_cfg = require('../config/wechat.cfg');
-var signature = require('../module/signature.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

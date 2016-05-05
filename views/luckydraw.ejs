@@ -179,6 +179,9 @@
         <div class="shareImg">
             <img src="/images/luckydraw/Brow_icon.png" alt="">
         </div>
+        <div class="goLuckyDraw">
+            <a href="javascript:;" onclick="goLuckyDraw()"><img src="/images/luckydraw/lottery_btn.png" alt=""></a>
+        </div>
     </div>
     <!--提示分享  end-->
 </div>
@@ -399,17 +402,13 @@
     });
 
     wx.ready(function(){
-//        var endTime = s+(m * 60);
-//        console.info('endTime',endTime);
-//        endTime = endTime > 0 ? endTime:'XX';
         wx.onMenuShareTimeline({
             title: '我离iPhone 6s只有一步之遥了', // 分享标题
             link: 'http://c.ibanyi.com/', // 分享链接
             imgUrl: '/images/share.png', // 分享图标
             success: function () {
                 // 用户确认分享后执行的回调函数
-                activityLogId = localStorage.getItem('activityLogId');
-                console.info('activityLogId===========',activityLogId);
+                activityLogId = JSON.parse(localStorage.getItem("activityLog"))._id;
                 $.ajax({
                     type:"POST",
                     url:"/game/share",
@@ -446,6 +445,13 @@
         },50);
     });
 
+    //去抽奖
+    function goLuckyDraw(){
+        var activityLog = JSON.parse(localStorage.getItem('activityLog'));
+        var activityLogId = activityLog._id;
+        var totalTimes = activityLog.time;
+        window.location.href = '/game/luckydraw?activityLogId='+activityLogId;
+    }
 </script>
 </body>
 </html>

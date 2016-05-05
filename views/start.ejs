@@ -24,8 +24,7 @@
     <section id='container' class="one_pic">
     </section>
 
-    <form method="post" name="timefrm">
-        <input type="hidden" name="totalTimes" value="0">
+    <form method="get" name="timefrm">
         <input type="hidden" name="activityLogId" value="0">
     </form>
     <div class="iby-time" id="iby-time">
@@ -37,6 +36,10 @@
     <div class="iby-msg-con hide" id="iby-share-btn">
         <div class="shareImg">
             <img src="/images/luckydraw/Brow_icon.png" alt="">
+
+        </div>
+        <div class="goLuckyDraw">
+            <a href="javascript:;" onclick="goLuckyDraw()"><img src="/images/luckydraw/lottery_btn.png" alt=""></a>
         </div>
     </div>
     <div class="iby-msg-con" id="msg">
@@ -81,7 +84,6 @@
             m+=1;s=0;
         }
         document.getElementById("times").innerHTML = toDou(m)+":"+toDou(s);
-        document.timefrm.totalTimes.value = s+(m*60);
         ss++;
     }
 
@@ -101,29 +103,40 @@
 
     //抽奖去鸟
     function NextStep(){
-        var activityLog = localStorage.getItem("activityLogId");
+        var activityLog = JSON.parse(localStorage.getItem("activityLog"));
+        var gameTime = s+ (m * 60);
         if(activityLog){
             console.info('activityLog======',activityLog);
+//            alert(JSON.parse(activityLog).time);
+            if(gameTime < activityLog.time){
+                var data = {time: gameTime, _id:activityLog._id};
+                setLog(data);
+            }
             document.timefrm.action="/game/luckydraw";
-            document.timefrm.activityLogId.value = activityLog;
+            document.timefrm.activityLogId.value = activityLog._id;
             document.timefrm.submit();
         }else{
-            var data = {time: s+ (m * 60), changeN:0, actCd: "WX00002",shareN: false};
-            $.ajax({
-                type: 'POST',
-                url: '/game/log',
-                data: JSON.stringify(data),
-                contentType:'application/json',
-                success: function (data) {
-                    localStorage.setItem('activityLogId', data._id);
-                    document.timefrm.action="/game/luckydraw";
-                    document.timefrm.activityLogId.value = data._id;
-                    document.timefrm.submit();
-                }
-            });
+            var data = {time: gameTime, changeN:0, actCd: "WX00002",shareN: false};
+            setLog(data);
         }
 
 
+    }
+
+    //设置或更新拼图记录
+    function setLog(logData){
+        $.ajax({
+            type: 'POST',
+            url: '/game/log',
+            data: JSON.stringify(logData),
+            contentType:'application/json',
+            success: function (data) {
+                localStorage.setItem('activityLog', JSON.stringify(data));
+                document.timefrm.action="/game/luckydraw";
+                document.timefrm.activityLogId.value = data._id;
+                document.timefrm.submit();
+            }
+        });
     }
 
     second();
@@ -172,12 +185,12 @@
 //        console.info('endTime',endTime);
 //        endTime = endTime > 0 ? endTime:'XX';
             wx.onMenuShareTimeline({
-                title: '萌猴拼图，我竟然只用了XX秒，猴赛雷！', // 分享标题
+                title: '萌猴拼图，我竟然只用了'+JSON.parse(localStorage.getItem("activityLog")).time+'秒，猴赛雷！', // 分享标题
                 link: 'http://c.ibanyi.com/', // 分享链接
                 imgUrl: '/images/share.png', // 分享图标
                 success: function () {
                     // 用户确认分享后执行的回调函数
-                    activityLogId = localStorage.getItem('activityLogId');
+                    activityLogId = JSON.parse(localStorage.getItem('activityLog'))._id;
                     console.info('activityLogId===========',activityLogId);
                     $.ajax({
                         type:"POST",
@@ -200,6 +213,14 @@
     function shareTimeline(){
         $('.iby-msg-con').hide();
         $('#iby-share-btn').show();
+    }
+
+    //去抽奖
+    function goLuckyDraw(){
+        var activityLog = JSON.parse(localStorage.getItem('activityLog'));
+        var activityLogId = activityLog._id;
+        var totalTimes = activityLog.time;
+        window.location.href = '/game/luckydraw?activityLogId='+activityLogId;
     }
 </script>
 

@@ -81,6 +81,14 @@
       .iby-start .iby-msg-con .iby-msg-3 .iby-msg-3-r img {
         width: 80%;
         margin: 0 0 0 5px; }
+    .iby-start .iby-msg-con .goLuckyDraw {
+      text-align: right;
+      width: 240px;
+      height: 168px;
+      margin: 50px auto 0 auto; }
+      .iby-start .iby-msg-con .goLuckyDraw img {
+        width: 240px;
+        height: 168px; }
   .iby-start .shareImg {
     text-align: right;
     padding: 10px 20px 0 0; }
@@ -259,6 +267,14 @@
     height: 100%;
     width: 100%;
     background: rgba(0, 0, 0, 0.6); }
+    .luckydraw-details .draw-msg-box .goLuckyDraw {
+      text-align: right;
+      width: 240px;
+      height: 168px;
+      margin: 50px auto 0 auto; }
+      .luckydraw-details .draw-msg-box .goLuckyDraw img {
+        width: 240px;
+        height: 168px; }
   .luckydraw-details .shareImg {
     text-align: right;
     padding: 10px 20px 0 0; }

@@ -37,11 +37,23 @@ router.get('/rules', function(req, res, next) {
     res.render('rules', {title: '抽奖规则'});
 });
 
-//保存访问统计
+//保存or更新访问统计
 router.post('/log', function(req, res, next) {
-    mongodb.collection('activity_game').save(req.body,function(err,data){
-        res.send(data.ops[0]);
-    });
+    if(req.body._id){
+        mongodb.collection('activity_game').updateById(req.body._id,{$set: {time: req.body.time}},function(err,data){
+            if(!err){
+                mongodb.collection('activity_game').findById(req.body._id, function(err,data){
+                    console.info('data1111111',data);
+                    res.send(data);
+                })
+            }
+        });
+    }else{
+        mongodb.collection('activity_game').save(req.body,function(err,data){
+            res.send(data.ops[0]);
+        });
+    }
+
 });
 
 //保存访问统计
@@ -84,10 +96,8 @@ router.post('/addlog', function(req, res, next) {
 
 
 //抽奖页面
-router.post('/luckydraw', function(req, res, next) {
-    console.info("req.body",req.body);
-    var totalTimes = req.body.totalTimes;
-    var activityLogId = req.body.activityLogId;
+router.get('/luckydraw', function(req, res, next) {
+    var activityLogId = req.query.activityLogId;
     var url = req.protocol + '://' + req.host + req.baseUrl + req.path; //获取当前url
     async.series({
         /* 微信签名 */
@@ -103,11 +113,16 @@ router.post('/luckydraw', function(req, res, next) {
                 console.info('data=========',data);
                 callback(null,data);
             })
-        }
+        },
+        totalTimes:function(callback){
+            mongodb.collection('activity_game').findById(activityLogId, function(err,data){
+                callback(null,data.time);
+            })
+        },
     },function(err, results){
-        if(activityLogId && totalTimes){
+        var totalTimes = results.totalTimes;
+        if(activityLogId){
             var findStr = {};
-            console.info('totalTimes==============',totalTimes);
             mongodb.collection('activity_lottery').find({actCd:"WX00002"}).toArray(
                 function(err,data){
                     if(totalTimes >= 90){
@@ -223,7 +238,7 @@ router.post('/luckydraw', function(req, res, next) {
                     res.render('luckydraw', {
                         title: '抽奖',
                         lotteryList:data,       //奖品list
-                        totalTimes:totalTimes,   //拼图总时间
+                        totalTimes:results.totalTimes,   //拼图总时间
                         signatureMap:results.signatureMap,//微信签名信息
                         activityLogId:activityLogId,   //当前用户拼图_id
                         drawList:results.drawList //中奖记录

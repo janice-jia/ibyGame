@@ -4,7 +4,7 @@
 
 
 //mongo外网配置
-var db = require('mongoskin').db('mongodb://root:123456@mongo.dbserver:27017,mongo.dbserver2:27017/bykj_act?replicaSet=mas');
+var db = require('mongoskin').db('mongodb://root:123456@mongo.dbserver:27017/bykj_act');
 db.bind('bykj_act');
 
 
