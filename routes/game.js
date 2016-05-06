@@ -98,7 +98,7 @@ router.post('/addlog', function(req, res, next) {
 //抽奖页面
 router.get('/luckydraw', function(req, res, next) {
     var activityLogId = req.query.activityLogId;
-    var url = req.protocol + '://' + req.host + req.baseUrl + req.path; //获取当前url
+    var url = req.protocol + '://' + req.host + req.originalUrl; //获取当前url
     async.series({
         /* 微信签名 */
         signatureMap:function(callback){

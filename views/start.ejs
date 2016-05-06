@@ -180,33 +180,39 @@
         ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
     });
 
-    wx.ready(function(){
-//        var endTime = s+(m * 60);
-//        console.info('endTime',endTime);
-//        endTime = endTime > 0 ? endTime:'XX';
-            wx.onMenuShareTimeline({
-                title: '萌猴拼图，我竟然只用了'+JSON.parse(localStorage.getItem("activityLog")).time+'秒，猴赛雷！', // 分享标题
-                link: 'http://c.ibanyi.com/', // 分享链接
-                imgUrl: '/images/share.png', // 分享图标
-                success: function () {
-                    // 用户确认分享后执行的回调函数
-                    activityLogId = JSON.parse(localStorage.getItem('activityLog'))._id;
-                    console.info('activityLogId===========',activityLogId);
-                    $.ajax({
-                        type:"POST",
-                        url:"/game/share",
-                        data:{activityLogId: activityLogId},
-                        success:function(data){
-                            $('#drawShare').hide();
-                        }
-                    });
-                },
-                cancel: function () {
-                    // 用户取消分享后执行的回调函数
-//                console.info('失败');
-                }
-            });
+    function shareTit(){
+        var ShareTimeline = '萌猴拼图，我竟然只用了XXX秒，猴赛雷！';
+        console.info(JSON.parse(localStorage.getItem("activityLog")));
+        if(JSON.parse(localStorage.getItem("activityLog"))){
+            ShareTimeline = '萌猴拼图，我竟然只用了'+JSON.parse(localStorage.getItem("activityLog")).time+'秒，猴赛雷！';
+        }
+        return ShareTimeline;
+    }
 
+    wx.ready(function(){
+        wx.onMenuShareTimeline({
+            title: shareTit(), // 分享标题
+            link: 'http://c.ibanyi.com/', // 分享链接
+            imgUrl: '/images/share.png', // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                activityLogId = JSON.parse(localStorage.getItem('activityLog'))._id;
+                console.info('activityLogId===========',activityLogId);
+                $.ajax({
+                    type:"POST",
+                    url:"/game/share",
+                    data:{activityLogId: activityLogId},
+                    success:function(data){
+                        $('#iby-share-btn').hide();
+                    }
+                });
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+                $('#iby-share-btn').hide();
+                $('#msg').show();
+            }
+        });
     })
 
     //分享弹层提示

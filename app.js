@@ -54,7 +54,6 @@ app.use('/game', game);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-    console.info(11111111111111111);
     var err = new Error('Not Found');
     err.status = 404;
     next(err);

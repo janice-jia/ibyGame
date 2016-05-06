@@ -164,7 +164,7 @@
                 恭喜您获得了<span id="draw-msg-prize">******</span>
             </p>
             <div class="draw-msg-img">
-                <img id="draw-msg-img" src="/images/luckydraw/no-draw.jpg" alt="">
+                <img id="draw-msg-img" src="/images/publicNumber.jpg" alt="">
             </div>
             <div class="draw-msg-btn">
                 <a href="/game/start"><img src="/images/luckydraw/Again.png" alt=""></a>
@@ -325,7 +325,6 @@
                         $("#lttrCd").val(drawStop.code);
                         $("#lttrNm").val(drawStop.name);
                         $("#type").val(drawStop.type);
-                        $("#draw-msg-img").attr('src',drawStop.imgUrl);
                         $("#draw-msg-prize").html(drawStop.name);
                     }
                 }
