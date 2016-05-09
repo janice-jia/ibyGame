@@ -178,6 +178,14 @@
         //重新设置微信分享标题
         wx.onMenuShareTimeline({
             title: shareTitle, // 分享标题
+            success: function () {
+                //微信分享成功回调
+                wxSuccess();
+            },
+            cancel: function () {
+                //微信分享取消回调
+                wxCancel();
+            }
         })
 
     };
@@ -208,25 +216,37 @@
             link: 'http://c.ibanyi.com/', // 分享链接
             imgUrl: '/images/share.png', // 分享图标
             success: function () {
-                // 用户确认分享后执行的回调函数
-                activityLogId = JSON.parse(localStorage.getItem('activityLog'))._id;
-                $.ajax({
-                    type:"POST",
-                    url:"/game/share",
-                    data:{activityLogId: activityLogId},
-                    success:function(data){
-                        $('#iby-share-btn').hide();
-                        $('#msg').show();
-                    }
-                });
+                //微信分享成功回调
+                wxSuccess();
             },
             cancel: function () {
-                // 用户取消分享后执行的回调函数
+                //微信分享取消回调
+                wxCancel();
+            }
+        });
+    })
+
+    //微信分享成功回调
+    function wxSuccess(){
+        // 用户确认分享后执行的回调函数
+        activityLogId = JSON.parse(localStorage.getItem('activityLog'))._id;
+        console.info('activityLogId',activityLogId);
+        $.ajax({
+            type:"POST",
+            url:"/game/share",
+            data:{activityLogId: activityLogId},
+            success:function(data){
                 $('#iby-share-btn').hide();
                 $('#msg').show();
             }
         });
-    })
+    }
+    //微信分享取消回调
+    function wxCancel(){
+        // 用户取消分享后执行的回调函数
+        $('#iby-share-btn').hide();
+        $('#msg').show();
+    }
 
     //分享弹层提示
     function shareTimeline(){
@@ -242,4 +262,5 @@
         window.location.href = '/game/luckydraw?activityLogId='+activityLogId;
     }
 </script>
+<%- include('cnzzLog') %>
 

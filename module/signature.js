@@ -7,7 +7,7 @@ exports.sign = function (url,callback) {
     var noncestr = config.noncestr,
         timestamp = Math.floor(Date.now()/1000), //精确到秒
         jsapi_ticket;
-    console.info('jsapi_ticket==============',jsapi_ticket);
+    //console.info('jsapi_ticket==============',jsapi_ticket);
     if(cache.get('ticket')){
         jsapi_ticket = cache.get('ticket');
         console.log('1' + 'jsapi_ticket=' + jsapi_ticket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url);

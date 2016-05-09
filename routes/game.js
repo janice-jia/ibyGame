@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var mongodb = require('../module/mongodb.js');
+var mongodb = require('../config/mongodb.js');
 var router = express.Router();
 var wechat_cfg = require('../config/wechat.cfg');
 //var http = require('http');
@@ -119,6 +119,7 @@ router.get('/luckydraw', function(req, res, next) {
             var findStr = {};
             mongodb.collection('activity_lottery').find({actCd:"WX00002"}).toArray(
                 function(err,data){
+                    totalTimes = 91;
                     if(totalTimes >= 90){
                         //设置奖品
                         setPrize(["20002", "20001", "20003", "Z9999", "Z9997", "Z9998"]);
@@ -191,8 +192,6 @@ router.get('/luckydraw', function(req, res, next) {
                                 } else if(data[i].code == "Z9998" && prizeList[j] == "Z9998"){//谢谢参与
                                     data[i].drawStatus = true;
                                     data[i].drawStop = 11;
-                                } else {
-                                    data[i].drawStatus = false;
                                 }
                             }
                         }
@@ -229,6 +228,7 @@ router.get('/luckydraw', function(req, res, next) {
                         }
                         return aData;
                     }
+                    console.info('data=======',data);
                     res.render('luckydraw', {
                         title: '抽奖',
                         lotteryList:data,       //奖品list
@@ -267,6 +267,7 @@ router.post('/luckyStop', function(req, res, next) {
         function drawCount(luckyStopTemp){
             mongodb.collection('activity_lottery').find({hitrate:luckyStopTemp, actCd:"WX00002"}).toArray(
                 function(err,data){
+                    console.info("data=======",data);
                     if(data.length > 0){
                         data = data[0];
                         if(data.count > 0) {
@@ -278,38 +279,35 @@ router.post('/luckyStop', function(req, res, next) {
                             );
 
                             //设置奖品位置
-                            data = setPrize(data);
-                            function setPrize(luckyStopTemp){
-                                if(luckyStopTemp.code == "20009"){
-                                    luckyStopTemp.drawStop = 0;
-                                }else if(luckyStopTemp.code == "20001"){
-                                    luckyStop.drawStop = 1;
-                                }else if(luckyStopTemp.code == "20007"){
-                                    luckyStopTemp.drawStop = 2;
-                                }else if(luckyStopTemp.code == "20004"){
-                                    luckyStopTemp.drawStop = 3;
-                                }else if(luckyStopTemp.code == "20008"){
-                                    luckyStop.drawStop = 4;
-                                }else if(luckyStopTemp.code == "20002"){
-                                    luckyStopTemp.drawStop = 5;
-                                }else if(luckyStopTemp.code == "Z9999"){
-                                    luckyStopTemp.drawStop = 6;
-                                }else if(luckyStopTemp.code == "20005"){
-                                    luckyStopTemp.drawStop = 7;
-                                }else if(luckyStopTemp.code == "20003"){
-                                    luckyStopTemp.drawStop = 8;
-                                }else if(luckyStopTemp.code == "Z9997"){
-                                    luckyStopTemp.drawStop = 9;
-                                }else if(luckyStopTemp.code == "20006"){
-                                    luckyStopTemp.drawStop = 10;
-                                }else if(luckyStopTemp.code == "Z9998"){
-                                    luckyStopTemp.drawStop = 11;
-                                }
-                                return luckyStopTemp;
+                            if(data.code == "20009"){
+                                data.drawStop = 0;
+                            }else if(data.code == "20001"){
+                                data.drawStop = 1;
+                            }else if(data.code == "20007"){
+                                data.drawStop = 2;
+                            }else if(data.code == "20004"){
+                                data.drawStop = 3;
+                            }else if(data.code == "20008"){
+                                data.drawStop = 4;
+                            }else if(data.code == "20002"){
+                                data.drawStop = 5;
+                            }else if(data.code == "Z9999"){
+                                data.drawStop = 6;
+                            }else if(data.code == "20005"){
+                                data.drawStop = 7;
+                            }else if(data.code == "20003"){
+                                data.drawStop = 8;
+                            }else if(data.code == "Z9997"){
+                                data.drawStop = 9;
+                            }else if(data.code == "20006"){
+                                data.drawStop = 10;
+                            }else if(data.code == "Z9998"){
+                                data.drawStop = 11;
                             }
                         }else {
                             drawCount(Math.round(getNumberInNormalDistribution(ztAverage, ztVariance)));
                         }
+                        console.info('data=-=====',data);
                         res.send(data);
                     }else{
                         drawCount(Math.round(getNumberInNormalDistribution(ztAverage, ztVariance)));

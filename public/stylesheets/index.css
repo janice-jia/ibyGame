@@ -137,6 +137,14 @@
       .luckydraw-details .draw-con ul li.draw-li-bg img {
         width: 100%;
         height: 100%; }
+  .luckydraw-details .draw-con ul li p.draw-def {
+    background: rgba(0, 255, 255, 0.7);
+    /*    background: rgba(255, 255, 255, 0.7);*/
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0; }
   .luckydraw-details .draw-con ul li p.draw-default {
     background: rgba(0, 0, 0, 0.7);
     /*    background: rgba(255, 255, 255, 0.7);*/
