@@ -17,12 +17,10 @@ router.get('/start', function(req, res, next) {
         signatureMap:function(callback){
             signature.sign(url,function(signatureMap){
                 signatureMap.appId = wechat_cfg.appid;
-                //console.info('signatureMap=========',signatureMap);
                 callback(null, signatureMap);
             });
         }
     },function(err, results){
-        console.info('results=====',results);
         res.render('start', {
             title: '开始游戏',
             signatureMap:results.signatureMap,
@@ -40,10 +38,9 @@ router.get('/rules', function(req, res, next) {
 //保存or更新访问统计
 router.post('/log', function(req, res, next) {
     if(req.body._id){
-        mongodb.collection('activity_game').updateById(req.body._id,{$set: {time: req.body.time}},function(err,data){
+        mongodb.collection('activity_game').updateById(req.body._id,{$set: {time: req.body.time,changeN: req.body.changeN,shareN: req.body.shareN}},function(err,data){
             if(!err){
                 mongodb.collection('activity_game').findById(req.body._id, function(err,data){
-                    console.info('data1111111',data);
                     res.send(data);
                 })
             }
@@ -80,7 +77,6 @@ router.get('/changeNum', function(req, res, next) {
 //微信分享成功之后改变状态
 router.post('/share', function(req, res, next) {
     var activityLogId = req.body.activityLogId;
-    console.info('activityLogId======',activityLogId);
     mongodb.collection('activity_game').updateById(activityLogId,{$set: {shareN: true}},function(){
         res.send(true);
     });
@@ -104,13 +100,11 @@ router.get('/luckydraw', function(req, res, next) {
         signatureMap:function(callback){
             signature.sign(url,function(signatureMap){
                 signatureMap.appId = wechat_cfg.appid;
-                //console.info('signatureMap=========',signatureMap);
                 callback(null, signatureMap);
             });
         },
         drawList:function(callback){
             mongodb.collection('activity_awd_logs').find().toArray(function(err, data){
-                console.info('data=========',data);
                 callback(null,data);
             })
         },
@@ -268,7 +262,6 @@ router.post('/luckyStop', function(req, res, next) {
         }
 
         var luckyStop =  Math.round(getNumberInNormalDistribution(ztAverage,ztVariance));
-        console.info('luckyStop==============', luckyStop);
 
         drawCount(luckyStop);
         function drawCount(luckyStopTemp){
@@ -276,7 +269,6 @@ router.post('/luckyStop', function(req, res, next) {
                 function(err,data){
                     if(data.length > 0){
                         data = data[0];
-                        console.info("data==============",data);
                         if(data.count > 0) {
                             //奖品数量--
                             mongodb.collection('activity_lottery').update(
@@ -288,7 +280,6 @@ router.post('/luckyStop', function(req, res, next) {
                             //设置奖品位置
                             data = setPrize(data);
                             function setPrize(luckyStopTemp){
-                                console.info('luckyStopTemp111111',luckyStopTemp);
                                 if(luckyStopTemp.code == "20009"){
                                     luckyStopTemp.drawStop = 0;
                                 }else if(luckyStopTemp.code == "20001"){
@@ -328,6 +319,13 @@ router.post('/luckyStop', function(req, res, next) {
         }
     });
 
+});
+
+//统计渠道来源、访问时间
+router.get('/saveSource',function(req,res,next){
+    mongodb.collection('activity_acs_logs').save(req.body,function(err,data){
+        res.send(data.ops[0]);
+    });
 });
 
 

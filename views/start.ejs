@@ -38,13 +38,13 @@
             <img src="/images/luckydraw/Brow_icon.png" alt="">
 
         </div>
-        <div class="goLuckyDraw">
-            <a href="javascript:;" onclick="goLuckyDraw()"><img src="/images/luckydraw/lottery_btn.png" alt=""></a>
-        </div>
+        <!--<div class="goLuckyDraw">-->
+            <!--<a href="javascript:;" onclick="goLuckyDraw()"><img src="/images/luckydraw/lottery_btn.png" alt=""></a>-->
+        <!--</div>-->
     </div>
     <div class="iby-msg-con" id="msg">
         <div class="iby-msg-1">拼图完成</div>
-        <div class="iby-msg-2" id="iby-msg-2">120秒</div>
+        <div class="iby-msg-2" id="iby-msg-2"></div>
         <div class="iby-msg-3">
             <div class="iby-msg-3-l">
                 <p>
@@ -106,10 +106,9 @@
         var activityLog = JSON.parse(localStorage.getItem("activityLog"));
         var gameTime = s+ (m * 60);
         if(activityLog){
-            console.info('activityLog======',activityLog);
-//            alert(JSON.parse(activityLog).time);
             if(gameTime < activityLog.time){
-                var data = {time: gameTime, _id:activityLog._id};
+                var data = activityLog;
+                data.time = gameTime;
                 setLog(data);
             }
             document.timefrm.action="/game/luckydraw";
@@ -149,6 +148,22 @@
         document.getElementById('iby-start-btn').style.display = "none";
         t.startGame();
         se=setInterval("second()",200);
+
+        //重置抽奖次数
+        var activityLog = JSON.parse(localStorage.getItem("activityLog"));
+        if(activityLog){
+            activityLog.changeN = 0;
+            activityLog.shareN = false;
+            $.ajax({
+                type: 'POST',
+                url: '/game/log',
+                data: JSON.stringify(activityLog),
+                contentType:'application/json',
+                success: function (data) {
+                    localStorage.setItem('activityLog', JSON.stringify(data));
+                }
+            });
+        }
     }
 
     //拼图成功方法
@@ -159,13 +174,18 @@
         document.getElementById("iby-msg-2").innerHTML = totalTime+'秒';
 
         document.getElementById("iby-time").style.display = 'none';
+        var shareTitle = '萌猴拼图，我竟然只用了'+totalTime+'秒，猴赛雷！';
+        //重新设置微信分享标题
+        wx.onMenuShareTimeline({
+            title: shareTitle, // 分享标题
+        })
+
     };
 
     var imgUrl = "/images/index/game400.jpg";
 
     //微信配置数据
     var signatureMap = '<%= signatureMap%>';
-    console.info('signatureMap==========', JSON.stringify(signatureMap));
     var timest = <%= signatureMap.timestamp%>;
 
     //微信配置
@@ -180,30 +200,23 @@
         ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
     });
 
-    function shareTit(){
-        var ShareTimeline = '萌猴拼图，我竟然只用了XXX秒，猴赛雷！';
-        console.info(JSON.parse(localStorage.getItem("activityLog")));
-        if(JSON.parse(localStorage.getItem("activityLog"))){
-            ShareTimeline = '萌猴拼图，我竟然只用了'+JSON.parse(localStorage.getItem("activityLog")).time+'秒，猴赛雷！';
-        }
-        return ShareTimeline;
-    }
 
     wx.ready(function(){
+        var shareTitle = '萌猴拼图，我竟然只用了XXX秒，猴赛雷！';
         wx.onMenuShareTimeline({
-            title: shareTit(), // 分享标题
+            title: shareTitle, // 分享标题
             link: 'http://c.ibanyi.com/', // 分享链接
             imgUrl: '/images/share.png', // 分享图标
             success: function () {
                 // 用户确认分享后执行的回调函数
                 activityLogId = JSON.parse(localStorage.getItem('activityLog'))._id;
-                console.info('activityLogId===========',activityLogId);
                 $.ajax({
                     type:"POST",
                     url:"/game/share",
                     data:{activityLogId: activityLogId},
                     success:function(data){
                         $('#iby-share-btn').hide();
+                        $('#msg').show();
                     }
                 });
             },

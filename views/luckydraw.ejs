@@ -157,7 +157,8 @@
                 <img src="/images/luckydraw/Top-decoration.png" alt="">
             </div>
             <div class="draw-msg-con-dh">
-                <p class="center"><span class="fc1">兑换码：</span><span class="fc2">10010</span></p>
+                <p class="center"><span class="fc1">兑换码：</span><br>
+                    <span class="fc2" id="cdKey">10010</span></p>
                 <p>请截屏并发到“爱版易”公众号兑奖，兑奖需要您留手机号，所留手机号仅用于活动奖，我们承诺绝不将您的联系方式泄露给第三方。</p>
             </div>
             <p class="draw-msg-prize">
@@ -179,9 +180,9 @@
         <div class="shareImg">
             <img src="/images/luckydraw/Brow_icon.png" alt="">
         </div>
-        <div class="goLuckyDraw">
-            <a href="javascript:;" onclick="goLuckyDraw()"><img src="/images/luckydraw/lottery_btn.png" alt=""></a>
-        </div>
+        <!--<div class="goLuckyDraw">-->
+            <!--<a href="javascript:;" onclick="goLuckyDraw()"><img src="/images/luckydraw/lottery_btn.png" alt=""></a>-->
+        <!--</div>-->
     </div>
     <!--提示分享  end-->
 </div>
@@ -306,7 +307,6 @@
                 $("#luck-draw_btn2").attr('href',"/game/start");
                 //抽奖过程结束
                 if(drawStop){
-                    console.info("drawStop111111111",drawStop);
                     //更改抽奖次数
                     $.ajax({
                         type:"POST",
@@ -315,11 +315,11 @@
                         success: function (data) {
                         }
                     });
+
                     if(drawStop.code == "Z9999" || drawStop.code == "Z9998" || drawStop.code == "Z9997" || drawStop.code == ""){
                         //谢谢参与
                         $("#drawThank").show();
                     }else{
-                        console.info('中奖信息：drawStop：',drawStop);
                         //填写手机号
                         $("#drawInfo").show();
                         $("#lttrCd").val(drawStop.code);
@@ -373,9 +373,8 @@
                 url:"/game/addlog",
                 data:data,
                 success:function(data){
-                    console.info('data=====',data);
                     $("#drawInfo").hide();
-
+                    $("#cdKey").html(data._id);
                     //显示兑换码弹层
                     $("#drawCDkey").show();
                 }
@@ -385,7 +384,6 @@
 
     //微信配置数据
     var signatureMap = '<%= signatureMap%>';
-    console.info('signatureMap==========', JSON.stringify(signatureMap));
     var timest = <%= signatureMap.timestamp%>;
 
     //微信配置
