@@ -31,7 +31,7 @@ router.get('/start', function(req, res, next) {
             title: '开始游戏',
             signatureMap:results.signatureMap,
             difficultyLevel:results.difficultyLevel, /* 拼图难易度,行与列,值越大,难度越高 */
-            activityLogId:'sssssss'   //当前用户拼图_id
+            //activityLogId:'sssssss'   //当前用户拼图_id
         });
     })
 

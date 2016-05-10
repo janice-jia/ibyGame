@@ -233,7 +233,7 @@
     function wxSuccess(){
         // 用户确认分享后执行的回调函数
         activityLogId = JSON.parse(localStorage.getItem('activityLog'))._id;
-        console.info('activityLogId',activityLogId);
+//        console.info('activityLogId',activityLogId);
         $.ajax({
             type:"POST",
             url:"/game/share",
