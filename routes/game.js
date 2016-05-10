@@ -236,7 +236,7 @@ router.get('/luckydraw', function(req, res, next) {
                         }
                         return aData;
                     }
-                    console.info('data=======',data);
+                    //console.info('data=======',data);
                     res.render('luckydraw', {
                         title: '抽奖',
                         lotteryList:data,       //奖品list
@@ -275,7 +275,7 @@ router.post('/luckyStop', function(req, res, next) {
         function drawCount(luckyStopTemp){
             mongodb.collection('activity_lottery').find({hitrate:luckyStopTemp, actCd:"WX00002"}).toArray(
                 function(err,data){
-                    console.info("data=======",data);
+                    //console.info("data=======",data);
                     if(data.length > 0){
                         data = data[0];
                         if(data.count > 0) {
@@ -315,7 +315,7 @@ router.post('/luckyStop', function(req, res, next) {
                         }else {
                             drawCount(Math.round(getNumberInNormalDistribution(ztAverage, ztVariance)));
                         }
-                        console.info('data=-=====',data);
+                        //console.info('data=-=====',data);
                         res.send(data);
                     }else{
                         drawCount(Math.round(getNumberInNormalDistribution(ztAverage, ztVariance)));

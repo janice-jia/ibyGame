@@ -33,18 +33,18 @@ app.use(session({
 
 
 // catch 从分享进来的如果不是首页链接则跳转回首页链接
-app.use(function (req, res, next) {
-    if (req.originalUrl == '/') {
-        req.session.filterShare = true;
-        next();
-    } else {
-        if(!req.session.filterShare){
-            res.redirect('/');
-        }else{
-            next();
-        }
-    }
-});
+//app.use(function (req, res, next) {
+//    if (req.originalUrl == '/') {
+//        req.session.filterShare = true;
+//        next();
+//    } else {
+//        if(!req.session.filterShare){
+//            res.redirect('/');
+//        }else{
+//            next();
+//        }
+//    }
+//});
 
 
 app.use('/', routes);
