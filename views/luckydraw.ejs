@@ -197,34 +197,39 @@
     var luckyStop = 0;
     var drawOn = 0;
     var subNum = false;//限制中奖几率提交次数
+    var openDraw = true;
     //判断次数
     function isChangeN(){
-        luckyStop = 0;
-        drawOn = 0;
-        drawIndex = 0;
-        $.ajax({
-            type:"GET",
-            url:"/game/changeNum",
-            data:{activityLogId: '<%= activityLogId %>'},
-            success:function(data){
-                data = JSON.parse(data);
-                if(data){
-                    var changeN = data.changeN;
-                    if(changeN == 0){
-                        luckydraw();
-                    }else if(changeN == 1 && data.shareN){
-                        //第二次抽奖
-                        luckydraw();
-                    }else if(changeN == 1 && !data.shareN){
-                        $('#drawShare').show();
-                    }else if(changeN > 1){
+        if(openDraw){
+            luckyStop = 0;
+            drawOn = 0;
+            drawIndex = 0;
+            openDraw = false;
+            $.ajax({
+                type:"GET",
+                url:"/game/changeNum",
+                data:{activityLogId: '<%= activityLogId %>'},
+                success:function(data){
+                    data = JSON.parse(data);
+                    if(data){
+                        var changeN = data.changeN;
+                        if(changeN == 0){
+                            luckydraw();
+                        }else if(changeN == 1 && data.shareN){
+                            //第二次抽奖
+                            luckydraw();
+                        }else if(changeN == 1 && !data.shareN){
+                            $('#drawShare').show();
+                        }else if(changeN > 1){
+                            alert('您已经没有抽奖机会啦！！！');
+                        }
+                    }else{
                         alert('您已经没有抽奖机会啦！！！');
                     }
-                }else{
-                    alert('您已经没有抽奖机会啦！！！');
                 }
-            }
-        });
+            });
+        }
+
     }
 
 
