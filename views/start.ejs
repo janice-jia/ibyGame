@@ -26,6 +26,7 @@
 
     <form method="get" name="timefrm">
         <input type="hidden" name="activityLogId" value="0">
+        <input type="hidden" name="gameTime" value="0">
     </form>
     <div class="iby-time" id="iby-time">
         <span id="times"></span>
@@ -113,6 +114,7 @@
             }
             document.timefrm.action="/game/luckydraw";
             document.timefrm.activityLogId.value = activityLog._id;
+            document.timefrm.gameTime.value = gameTime;
             document.timefrm.submit();
         }else{
             var data = {time: gameTime, changeN:0, actCd: "WX00002",shareN: false};

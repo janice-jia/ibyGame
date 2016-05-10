@@ -110,11 +110,20 @@ router.get('/luckydraw', function(req, res, next) {
         },
         totalTimes:function(callback){
             mongodb.collection('activity_game').findById(activityLogId, function(err,data){
-                callback(null,data.time);
+                if(data){
+                    callback(null,data.time);
+                }else{
+                    callback(null,null);
+                }
             })
         },
     },function(err, results){
-        var totalTimes = results.totalTimes;
+        var totalTimes = 0;
+        if(req.query.gameTime){
+            var totalTimes = req.query.gameTime;
+        }else{
+            totalTimes = results.totalTimes;
+        }
         if(activityLogId){
             var findStr = {};
             mongodb.collection('activity_lottery').find({actCd:"WX00002"}).toArray(
