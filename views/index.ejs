@@ -1,19 +1,10 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title><%= title %></title>
-        <link rel='stylesheet' href='/stylesheets/base.css' />
-        <link rel='stylesheet' href='/stylesheets/index.css' />
-    </head>
-    <body>
-        <div class="iby-index">
-            <div class="iby-index-bg"></div>
-            <div class="iby-index-btn">
-                <a href="/game/start"><img src="/images/index/Home_Begin_btn.png" alt=""></a>
-                <a href="/game/rules"><img src="/images/index/Home_Rule_btn.png" alt=""></a>
-            </div>
-            <div class="clear"></div>
+<%- include('header') %>
+    <div class="iby-index">
+        <div class="iby-index-bg"></div>
+        <div class="iby-index-btn">
+            <a href="/game/start"><img src="/images/index/Home_Begin_btn.png" alt=""></a>
+            <a href="/game/rules"><img src="/images/index/Home_Rule_btn.png" alt=""></a>
         </div>
-    </body>
-    <%- include('cnzzLog') %>
-</html>
+        <div class="clear"></div>
+    </div>
+<%- include('footer') %>

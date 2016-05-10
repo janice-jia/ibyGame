@@ -142,7 +142,8 @@
 
     second();
     var gamenum = 1;
-    var  t=new Game(2,2);//行与列,值越大,难度越高
+    var difficultyLevel = '<%= difficultyLevel %>';
+    var  t=new Game(difficultyLevel,difficultyLevel);//行与列,值越大,难度越高
 
     //拼图开始
     document.getElementById('start').onclick=function(){

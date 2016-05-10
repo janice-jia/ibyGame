@@ -7,6 +7,4 @@
 var db = require('mongoskin').db('mongodb://root:123456@mongo.dbserver:27017/bykj_act');
 db.bind('bykj_act');
 
-
-
 module.exports = db;
