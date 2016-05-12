@@ -186,7 +186,7 @@
         var intervalTimer = setInterval(function(){
             if(iIndex<lotteryListString.length){
                 if(!lotteryListString[iIndex].drawStatus){
-                    $(drawList[drawArr[iIndex]]).find('p').html('小于<%=totalTimes%>');
+                    $(drawList[drawArr[iIndex]]).find('p').html('小于<%=totalTimes%>秒');
                     $(drawList[drawArr[iIndex]]).find('p').addClass('draw-def');
                 }
             }else{

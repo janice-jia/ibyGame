@@ -102,7 +102,7 @@ Game.prototype.drag=function(o){
 			  }
 			  
 			  
-			  console.log(self.arr);
+			  //console.log(self.arr);
 			
 			  o.releaseCapture && o.releaseCapture();
 			  document.ontouchmove=null;
