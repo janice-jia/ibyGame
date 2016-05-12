@@ -7,24 +7,24 @@
         <ul id="draw-con-ul">
 
             <li class="draw-li-bg">
-                <img src="<%= lotteryList[0].imgUrl %>" alt="">0
-                <p class="<% if (!lotteryList[0].drawStatus) { %> draw-def <% } %>"></p>
+                <img src="<%= lotteryList[0].imgUrl %>" alt="">
+                <p></p>
             </li>
             <li class="draw-li-bg">
                 <img src="<%= lotteryList[1].imgUrl %>" alt="">
-                <p class="<% if (!lotteryList[1].drawStatus) { %> draw-def <% } %>"></p>
+                <p></p>
             </li>
             <li class="draw-li-bg">
                 <img src="<%= lotteryList[2].imgUrl %>" alt="">
-                <p class="<% if (!lotteryList[2].drawStatus) { %> draw-def <% } %>"></p>
+                <p></p>
             </li>
             <li class="draw-li-bg">
                 <img src="<%= lotteryList[3].imgUrl %>" alt="">
-                <p class="<% if (!lotteryList[3].drawStatus) { %> draw-def <% } %>"></p>
+                <p></p>
             </li>
             <li class="draw-li-bg">
                 <img src="<%= lotteryList[11].imgUrl %>" alt="">
-                <p class="<% if (!lotteryList[11].drawStatus) { %> draw-def <% } %>"></p>
+                <p></p>
             </li>
             <li class="draw-li-bg draw-click" title="开始抽奖">
                 <div class="luck-draw_btn1">
@@ -33,11 +33,11 @@
             </li>
             <li class="draw-li-bg">
                 <img src="<%= lotteryList[4].imgUrl %>" alt="">
-                <p class="<% if (!lotteryList[4].drawStatus) { %> draw-def <% } %>"></p>
+                <p></p>
             </li>
             <li class="draw-li-bg">
                 <img src="<%= lotteryList[10].imgUrl %>" alt="">
-                <p class="<% if (!lotteryList[10].drawStatus) { %> draw-def <% } %>"></p>
+                <p></p>
             </li>
             <li class="draw-li-bg draw-click" title="继续抽奖">
                 <div class="luck-draw_btn2">
@@ -46,23 +46,23 @@
             </li>
             <li class="draw-li-bg">
                 <img src="<%= lotteryList[5].imgUrl %>" alt="">
-                <p class="<% if (!lotteryList[5].drawStatus) { %> draw-def <% } %>"></p>
+                <p></p>
             </li>
             <li class="draw-li-bg">
                 <img src="<%= lotteryList[9].imgUrl %>" alt="">
-                <p class="<% if (!lotteryList[9].drawStatus) { %> draw-def <% } %>"></p>
+                <p></p>
             </li>
             <li class="draw-li-bg">
                 <img src="<%= lotteryList[8].imgUrl %>" alt="">
-                <p class="<% if (!lotteryList[8].drawStatus) { %> draw-def <% } %>"></p>
+                <p></p>
             </li>
             <li class="draw-li-bg">
                 <img src="<%= lotteryList[7].imgUrl %>" alt="">
-                <p class="<% if (!lotteryList[7].drawStatus) { %> draw-def <% } %>"></p>
+                <p></p>
             </li>
             <li class="draw-li-bg">
                 <img src="<%= lotteryList[6].imgUrl %>" alt="">
-                <p class="<% if (!lotteryList[6].drawStatus) { %> draw-def <% } %>"></p>
+                <p></p>
             </li>
         </ul>
         <div class="clear"></div>
@@ -72,8 +72,8 @@
         <div class="draw-list-con">
             <div class="draw-list-tit">中奖纪录</div>
             <div class="list-line"></div>
-            <div style="height:70px; overflow:hidden;">
-                <div class="drawList" id="marquee">
+            <div id="marquee" style=" line-height: 25px;">
+                <div class="drawList" id="marquee1">
                     <% drawList.forEach(function(draw){ %>
                     <ul class="list-ul2">
                         <li class="list-w-50"><%= draw.userName %></li>
@@ -81,6 +81,7 @@
                     </ul>
                     <% }) %>
                 </div>
+                <div class="drawList" id="marquee2"></div>
             </div>
             <div style="clear:both"></div>
         </div>
@@ -174,14 +175,35 @@
     #marquee{line-height: 20px;margin:0}
 </style>
 <script>
+    var openDraw = false;
+    var lotteryListString = <%-lotteryListString%>;
+    //判断阶段
+    if(lotteryListString){
+        var timeVal = 1;
+        var drawList = $('#draw-con-ul li');
+        var iIndex=0;
+        var drawArr = [0, 1, 2, 3, 6, 9, 13, 12, 11, 10, 7, 4];//抽奖效果奖品路线
+        var intervalTimer = setInterval(function(){
+            if(iIndex<lotteryListString.length){
+                if(!lotteryListString[iIndex].drawStatus){
+                    $(drawList[drawArr[iIndex]]).find('p').html('小于<%=totalTimes%>');
+                    $(drawList[drawArr[iIndex]]).find('p').addClass('draw-def');
+                }
+            }else{
+                openDraw = true;
+                clearInterval(intervalTimer);
+            }
+            iIndex++;
+        },200)
+    }
     var drawIndex = 0;
     var timeIndex = 1;
     var drawArr = [0, 1, 2, 3, 6, 9, 13, 12, 11, 10, 7, 4];//抽奖效果奖品路线
     var drawList = $('#draw-con-ul li');
-    var luckyStop = 0;
-    var drawOn = 0;
-    var subNum = false;//限制中奖几率提交次数
-    var openDraw = true;
+    var luckyStop = 0;      //抽中奖品位置index
+    var drawOn = 0;         //抽中奖品停止数值
+    var subNum = false;     //限制中奖几率提交次数
+
     //判断次数
     function isChangeN(){
         if(openDraw){
@@ -419,23 +441,40 @@
 
 
     //中奖纪录滚动效果
-    $(function(){
-        var marqueeH = $('#marquee ul').children * 20;
-        var marquee = document.getElementById('marquee');
-        var marqueeH = 20 * 20;
-        marquee.style.height = marqueeH+'px';
-        var offset=0;
-        var scrollheight =marquee.offsetHeight;
-        var firstNode = marquee.children[0].cloneNode(true);
-        marquee.appendChild(firstNode);
-        setInterval(function(){
-            if(offset == scrollheight){
-                offset = 0;
-            }
-            marquee.style.marginTop = "-"+offset+"px";
-            offset += 1;
-        },50);
-    });
+    var marquee = document.getElementById("marquee");
+    var marquee1 = document.getElementById("marquee1");
+    var marquee2 = document.getElementById("marquee2");
+    var speed=50;    //滚动速度值，值越大速度越慢
+    var nnn=200/marquee1.offsetHeight;
+    for(i=0;i<nnn;i++){marquee1.innerHTML+="<br />"+ marquee1.innerHTML}
+    marquee2.innerHTML = marquee1.innerHTML    //克隆www_zzjs_net_2为www_zzjs_net_1
+    function marqueeTop(){
+        if(marquee2.offsetTop-marquee.scrollTop<=0)    //当滚动至www_zzjs_net_1与www_zzjs_net_2交界时
+            marquee.scrollTop-=marquee1.offsetHeight    //wwwzzjsnet跳到最顶端
+        else{
+            marquee.scrollTop++     //如果是横向的 将 所有的 height top 改成 width left
+        }
+    }
+    var MyMar = setInterval(marqueeTop,speed);        //设置定时器
+    marquee.onmouseover = function(){clearInterval(MyMar)}    //鼠标经过时清除定时器达到滚动停止的目的
+    marquee.onmouseout = function(){MyMar = setInterval(marqueeTop,speed)}    //鼠标移开时重设定时器
+//    $(function(){
+//        var marqueeH = $('#marquee ul').children * 20;
+//        var marquee = document.getElementById('marquee');
+//        var marqueeH = 20 * 20;
+//        marquee.style.height = marqueeH+'px';
+//        var offset=0;
+//        var scrollheight =marquee.offsetHeight;
+//        var firstNode = marquee.children[0].cloneNode(true);
+//        marquee.appendChild(firstNode);
+//        setInterval(function(){
+//            if(offset == scrollheight){
+//                offset = 0;
+//            }
+//            marquee.style.marginTop = "-"+offset+"px";
+//            offset += 1;
+//        },50);
+//    });
 
     //去抽奖
     function goLuckyDraw(){

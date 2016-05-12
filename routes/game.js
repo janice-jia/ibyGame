@@ -133,7 +133,7 @@ router.get('/luckydraw', function(req, res, next) {
         }
         if(activityLogId){
             var findStr = {};
-            mongodb.collection('activity_lottery').find({actCd:"WX00002"}).toArray(
+            mongodb.collection('activity_lottery').find({actCd:"WX00002"}, {'grp': 0}).toArray(
                 function(err,data){
                     if(totalTimes >= 90){
                         //设置奖品
@@ -247,7 +247,8 @@ router.get('/luckydraw', function(req, res, next) {
                     res.render('luckydraw', {
                         title: '抽奖',
                         lotteryList:data,       //奖品list
-                        totalTimes:results.totalTimes,   //拼图总时间
+                        lotteryListString:JSON.stringify(data),       //奖品list
+                        totalTimes:totalTimes,   //拼图总时间
                         signatureMap:results.signatureMap,//微信签名信息
                         activityLogId:activityLogId,   //当前用户拼图_id
                         drawList:results.drawList //中奖记录

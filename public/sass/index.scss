@@ -7,8 +7,6 @@
     .iby-index-bg{
         width: 100%;
         height: 100%;
-        background: url("/images/index/BG.png") no-repeat;
-        background-size: 100% 100%;
         position: relative;
         top: 0;
         left: 0;
@@ -41,10 +39,14 @@
         line-height: 100px;
     }
     .iby-time{
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
         height:75px;
         background: #cdcdcd;
         font-size: 20px;
-        margin: 10px 0 0 0;
+        //margin: 10px 0 0 0;
         color: #EB6261;
         letter-spacing: 20px;
         text-align: center;
@@ -66,7 +68,10 @@
             display: none;
         }
         #start{
-            margin: 60% 0 0 0;
+            position: fixed;
+            top: 50%;
+            left: 10%;
+            margin:  0 auto;
         }
         .iby-msg-1{
             height: 100px;
@@ -133,6 +138,7 @@
 .luckydraw-details{
     width: 100%;
     height: auto;
+    min-height: 100%;
     background: url('../images/luckydraw/BG_2.png') no-repeat;
     background-size: 100% 100%;
     position: relative;
@@ -174,25 +180,32 @@
         &.draw-li-bg{
             background: #b76116;
             border: 5px solid #a04c04;
+            text-align: center;
+            box-sizing: border-box;
+            padding: 5px 2px;
             img{
-                width: 100%;
-                height: 100%;
+                width: auto;
+                max-width: 100%;
+                max-height: 100%;
             }
         }
     }
     .draw-con ul li p.draw-def{
-        background: rgba(0, 255, 255, 0.7);
-        /*    background: rgba(255, 255, 255, 0.7);*/
+        background: rgba(0, 0, 0, 0.5);
         position: absolute;
         width: 100%;
         height:100%;
         left: 0;
         top:0;
+        color: #ffffff;
+        text-align: center;
+        line-height: 18px;
+        padding: 5px;
+        box-sizing: border-box;
     }
 
     .draw-con ul li p.draw-default{
-        background: rgba(0, 0, 0, 0.7);
-        /*    background: rgba(255, 255, 255, 0.7);*/
+        border: 1px solid #fff;
         position: absolute;
         width: 100%;
         height:100%;
@@ -255,8 +268,11 @@
     }
     .draw-list{
         max-height: 100%;
+        width:80%;
         overflow: hidden;
         height: auto;
+        margin:  0 auto  0 auto;
+        padding-bottom: 40px;
     }
     .draw-list-con{
         background: #a04c04;
@@ -334,7 +350,6 @@
 
     .draw-con ul li{
         width: 25%;
-        height: 55px;
         box-sizing: border-box;
     }
 
@@ -349,11 +364,6 @@
 
     .draw-cur ul li{
         width: 70px;
-    }
-
-    .draw-list{
-        width:80%;
-        margin:  0 auto  0 auto;
     }
 
     .draw-msg-box{
@@ -522,13 +532,83 @@
 .iby-rules{
     width: 100%;
     height: 100%;
-    background: url("/images/luckydraw/BG.png") no-repeat;
-    background-size: 100% 100%;
     img{
         width: 90%;
-        bottom: 55px;
         position: fixed;
         left: 5%;
     }
 }
 //奖励规则end
+
+
+//适配
+@media screen and (max-width:640px){
+    .iby-index-bg{
+        background: url("/images/index/BG.png") no-repeat;
+        background-size: 100% 100%;
+    }
+    .iby-rules{
+        background: url("/images/luckydraw/BG.png") no-repeat;
+        background-size: 100% 100%;
+        img{
+            bottom: 17px;
+        }
+    }
+    .one_pic{
+        width:300px;
+        height:300px;
+        overflow:hidden;
+        position:absolute;
+        top:50%;
+        left:50%;
+        margin:-150px 0 0 -150px;
+    }
+    .luckydraw-details{
+        .draw-con ul li{
+            height: 65px;
+        }
+    }
+    #marquee{
+        height: 70px;
+        overflow:hidden;
+    }
+}
+@media screen and (min-width:640px){
+    .iby-index-bg{
+        background: url("/images/index/BG@2x.png") no-repeat;
+        background-size: 100% 100%;
+    }
+    .iby-rules{
+        background: url("/images/luckydraw/BG@2x.png") no-repeat;
+        background-size: 100% 100%;
+        img{
+            bottom: 20px;
+        }
+    }
+    .iby-index .iby-index-btn{
+        padding:0 0 2% 0;
+    }
+    .one_pic{
+        width:640px;
+        height:640px;
+        overflow:hidden;
+        position:absolute;
+        top:50%;
+        left:50%;
+        margin:-320px 0 0 -320px;
+    }
+    .luckydraw-details{
+        .draw-con ul li{
+            height: 120px;
+        }
+        .draw-con ul li p.draw-def{
+            font-size: 20px;
+            padding-top: 40px;
+        }
+    }
+    #marquee{
+        height: 120px;
+        line-height: 25px;
+        overflow:hidden;
+    }
+}

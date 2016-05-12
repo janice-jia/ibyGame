@@ -1,12 +1,12 @@
-﻿function Game(row,col){
+﻿function Game(row,col,jpgWidth){
    this.con=document.getElementById('container');
    this.item=[];
-   this.conwidth=300;
-   this.conheight=300;
-   this.row=row||3;
-   this.col=col||3;
-   this.minwidth=this.conwidth/this.col;
-   this.minheight=this.conheight/this.row;
+   this.conwidth=jpgWidth;
+	this.conheight=jpgWidth;
+	this.row=row||3;
+	this.col=col||3;
+	this.minwidth=this.conwidth/this.col;
+	this.minheight=this.conheight/this.row;
    this.num=this.row*this.col;
    this.arr=[];//初始化数组;
    this.newarr=[];//随机图片数组;

@@ -1,21 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8" />
-    <meta name="Keywords" content=""/>
-    <meta name="Description" content=""/>
-    <meta content="yes" name="apple-mobile-web-app-capable" />
-    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,maximum-scale=1" />
-    <title><%= title %></title>
-    <link type="text/css" rel="stylesheet" href="/stylesheets/touch.css" />
-    <link rel='stylesheet' href='/stylesheets/base.css' />
-    <link rel='stylesheet' href='/stylesheets/index.css' />
-
-
-</head>
-<body>
+<%- include('header') %>
+<link type="text/css" rel="stylesheet" href="/stylesheets/touch.css" />
 <div class="iby-start">
     <div class="iby-start-tit" id="iby-start-tit">你离Iphone只差一步</div>
     <!--<center class="starter" id="resetbtn" style="display:none">-->
@@ -32,12 +16,11 @@
         <span id="times"></span>
     </div>
     <div class="iby-msg-con" id="iby-start-btn">
-        <center class="starter" id="startbtn"><input type='button'  value='开始' id='start'/></center>
+        <center class="starter" id="startbtn"><input type='button'  value='' id='start'/></center>
     </div>
     <div class="iby-msg-con hide" id="iby-share-btn">
         <div class="shareImg">
             <img src="/images/luckydraw/Brow_icon.png" alt="">
-
         </div>
         <!--<div class="goLuckyDraw">-->
             <!--<a href="javascript:;" onclick="goLuckyDraw()"><img src="/images/luckydraw/lottery_btn.png" alt=""></a>-->
@@ -63,19 +46,23 @@
         </div>
     </div>
 </div>
-</body>
-</html>
+
 
 <script src="/js/pintu.js" type="text/javascript"></script>
 <script src="/js/jweixin-1.0.0.js" type="text/javascript"></script>
-<script src="/js/zepto.min.js" type="text/javascript"></script>
 <script>
+    var bgimg = '';    //拼图图片地址
+    if(($(window).width()) > 640){
+        bgimg = '/images/index/game.jpg';    //拼图图片地址
+    }else{
+        bgimg = '/images/index/game400.jpg';    //拼图图片地址
+    }
     //拼图计时
     var se;
     var m=0;
     var s=0;
     var ss=1;
-    var bgimg = '/images/index/game400.jpg';    //拼图图片地址
+
     function second(){
         if (ss%5==0)
         {
@@ -105,7 +92,7 @@
     //抽奖去鸟
     function NextStep(){
         var activityLog = JSON.parse(localStorage.getItem("activityLog"));
-        var gameTime = s+ (m * 60);
+        var gameTime = s + (m * 60);
         if(activityLog){
             if(gameTime < activityLog.time){
                 var data = activityLog;
@@ -135,7 +122,7 @@
                 localStorage.setItem('activityLog', JSON.stringify(data));
                 document.timefrm.action="/game/luckydraw";
                 document.timefrm.activityLogId.value = data._id;
-                document.timefrm.submit();
+//                document.timefrm.submit();
             }
         });
     }
@@ -143,7 +130,12 @@
     second();
     var gamenum = 1;
     var difficultyLevel = '<%= difficultyLevel %>';
-    var  t=new Game(difficultyLevel,difficultyLevel);//行与列,值越大,难度越高
+    var  t='';//行与列,值越大,难度越高
+    if(($(window).width()) > 640){
+        t=new Game(difficultyLevel,difficultyLevel,640);//行与列,值越大,难度越高
+    }else{
+        t=new Game(difficultyLevel,difficultyLevel,300);//行与列,值越大,难度越高
+    }
 
     //拼图开始
     document.getElementById('start').onclick=function(){
@@ -177,6 +169,8 @@
         document.getElementById("iby-msg-2").innerHTML = totalTime+'秒';
 
         document.getElementById("iby-time").style.display = 'none';
+        setLog({time:totalTime,changeN:0,actCd:'WX00002',shareN:false});
+
         var shareTitle = '萌猴拼图，我竟然只用了'+totalTime+'秒，猴赛雷！';
         //重新设置微信分享标题
         wx.onMenuShareTimeline({
@@ -233,7 +227,7 @@
     function wxSuccess(){
         // 用户确认分享后执行的回调函数
         activityLogId = JSON.parse(localStorage.getItem('activityLog'))._id;
-//        console.info('activityLogId',activityLogId);
+        console.info('activityLogId',activityLogId);
         $.ajax({
             type:"POST",
             url:"/game/share",
@@ -265,5 +259,5 @@
         window.location.href = '/game/luckydraw?activityLogId='+activityLogId;
     }
 </script>
-<%- include('cnzzLog') %>
+<%- include('footer') %>
 
