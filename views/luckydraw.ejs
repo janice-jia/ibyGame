@@ -226,6 +226,9 @@
                             luckydraw();
                         }else if(changeN == 1 && !data.shareN){
                             $('#drawShare').show();
+                            setInterval(function(){
+                                $('#drawShare').hide();
+                            },3000)
                         }else if(changeN > 1){
                             alert('您已经没有抽奖机会啦！！！');
                         }
@@ -296,7 +299,7 @@
                     eachDraw(luckyStop);
                 }
             });
-            $("#luck-draw_btn1").attr("src","/images/luckydraw/Again_btn.png");
+
     }
 
 
@@ -317,6 +320,7 @@
             setTimeout(function(){
                 openDraw = true;
                 $("#luck-draw_btn2").attr('href',"/game/start");
+                $("#luck-draw_btn1").attr("src","/images/luckydraw/Again_btn.png");
                 //抽奖过程结束
                 if(drawStop){
                     //更改抽奖次数
@@ -410,7 +414,9 @@
         nonceStr: '<%= signatureMap.noncestr%>', // 必填，生成签名的随机串
         signature: '<%= signatureMap.signature%>',// 必填，签名，见附录1
         jsApiList: [
-            'onMenuShareTimeline'
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'hideMenuItems'
         ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
     });
 
@@ -429,6 +435,9 @@
                     success:function(data){
                         openDraw = true;
                         $('#drawShare').hide();
+                        setInterval(function(){
+                            $('#drawShare').hide();
+                        },3000)
                     }
                 });
             },
@@ -437,6 +446,30 @@
             }
         });
 
+        wx.onMenuShareAppMessage({
+            title: '我离iPhone 6s只有一步之遥了', // 分享标题
+            link: 'http://c.ibanyi.com/', // 分享链接
+            imgUrl: '/images/share.png', // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                activityLogId = JSON.parse(localStorage.getItem("activityLog"))._id;
+                $.ajax({
+                    type:"POST",
+                    url:"/game/share",
+                    data:{activityLogId: activityLogId},
+                    success:function(data){
+                        openDraw = true;
+                        $('#drawShare').hide();
+                        setInterval(function(){
+                            $('#drawShare').hide();
+                        },3000)
+                    }
+                });
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
     })
 
 

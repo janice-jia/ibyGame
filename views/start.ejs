@@ -175,6 +175,8 @@
         //重新设置微信分享标题
         wx.onMenuShareTimeline({
             title: shareTitle, // 分享标题
+            link: 'http://c.ibanyi.com/', // 分享链接
+            imgUrl: '/images/share.png', // 分享图标
             success: function () {
                 //微信分享成功回调
                 wxSuccess();
@@ -183,7 +185,21 @@
                 //微信分享取消回调
                 wxCancel();
             }
-        })
+        });
+
+        wx.onMenuShareAppMessage({
+            title: shareTitle, // 分享标题
+            link: 'http://c.ibanyi.com/', // 分享链接
+            imgUrl: '/images/share.png', // 分享图标
+            success: function () {
+                //微信分享成功回调
+                wxSuccess();
+            },
+            cancel: function () {
+                //微信分享取消回调
+                wxCancel();
+            }
+        });
 
     };
 
@@ -201,14 +217,39 @@
         nonceStr: '<%= signatureMap.noncestr%>', // 必填，生成签名的随机串
         signature: '<%= signatureMap.signature%>',// 必填，签名，见附录1
         jsApiList: [
-            'onMenuShareTimeline'
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'hideMenuItems'
         ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
     });
 
 
     wx.ready(function(){
+
+//        wx.hideMenuItems({
+//            menuList: [
+//                'menuItem:share:qq',//分享到QQ
+//                'menuItem:share:weiboApp',//分享到Weibo
+//                'menuItem:share:QZone',//分享到 QQ 空间
+//            ] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮
+//        });
+
         var shareTitle = '萌猴拼图，我竟然只用了XXX秒，猴赛雷！';
         wx.onMenuShareTimeline({
+            title: shareTitle, // 分享标题
+            link: 'http://c.ibanyi.com/', // 分享链接
+            imgUrl: '/images/share.png', // 分享图标
+            success: function () {
+                //微信分享成功回调
+//                wxSuccess();
+            },
+            cancel: function () {
+                //微信分享取消回调
+//                wxCancel();
+            }
+        });
+
+        wx.onMenuShareAppMessage({
             title: shareTitle, // 分享标题
             link: 'http://c.ibanyi.com/', // 分享链接
             imgUrl: '/images/share.png', // 分享图标
@@ -249,6 +290,10 @@
     function shareTimeline(){
         $('.iby-msg-con').hide();
         $('#iby-share-btn').show();
+        setTimeout(function(){
+            $('.iby-msg-con').show();
+            $('#iby-share-btn').hide();
+        },3000)
     }
 
     //去抽奖

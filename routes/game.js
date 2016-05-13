@@ -135,7 +135,7 @@ router.get('/luckydraw', function(req, res, next) {
             var findStr = {};
             mongodb.collection('activity_lottery').find({actCd:"WX00002"}, {'grp': 0}).toArray(
                 function(err,data){
-                    if(totalTimes >= 90){
+                    if(totalTimes >= 90 || totalTimes == 0){
                         //设置奖品
                         setPrize(["20002", "20001", "20003", "Z9999", "Z9997", "Z9998"]);
                         data = orderData();
