@@ -11,7 +11,7 @@ var async = require('async');
 
 //拼图
 router.get('/start', function(req, res, next) {
-    var url = req.protocol + '://' + req.host + req.baseUrl + req.path; //获取当前url
+    var url = req.protocol + '://' + req.host + req.originalUrl; //获取当前url
     async.series({
         /* 获取项目动态 */
         signatureMap:function(callback){
