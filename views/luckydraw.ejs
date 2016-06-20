@@ -28,7 +28,7 @@
             </li>
             <li class="draw-li-bg draw-click" title="开始抽奖">
                 <div class="luck-draw_btn1">
-                    <a href="javascript:;" onclick="isChangeN()"><img id="luck-draw_btn1" src="/images/luckydraw/luck-draw_btn.png" alt=""></a>
+                    <a href="javascript:;" onclick="isChangeN()" id="isChangeN"><img id="luck-draw_btn1" src="/images/luckydraw/luck-draw_btn.png" alt=""></a>
                 </div>
             </li>
             <li class="draw-li-bg">
@@ -40,8 +40,8 @@
                 <p></p>
             </li>
             <li class="draw-li-bg draw-click" title="继续抽奖">
-                <div class="luck-draw_btn2">
-                    <a id="luck-draw_btn2" href="/game/start"><img src="/images/luckydraw/Go-on.png" alt=""></a>
+                <div class="luck-draw_btn2" id="goHome" onclick="goHome()">
+                    <a id="luck-draw_btn2" href="javascript:;"><img src="/images/luckydraw/Go-on.png" alt=""></a>
                 </div>
             </li>
             <li class="draw-li-bg">
@@ -206,6 +206,9 @@
 
     //判断次数
     function isChangeN(){
+        //开始抽奖、再抽一次统计按钮点击数量
+        _czc.push(﻿['_trackEvent','开始抽奖、再抽一次','抽奖','拼图完成后抽奖页面',0,'isChangeN']);
+
         if(openDraw){
             luckyStop = 0;
             drawOn = 0;
@@ -521,5 +524,14 @@
         var totalTimes = activityLog.time;
         window.location.href = '/game/luckydraw?activityLogId='+activityLogId;
     }
+
+    //继续挑战
+    function goHome(){
+        //继续挑战统计按钮点击数量
+        _czc.push(﻿['_trackEvent','继续挑战','重新开始挑战游戏','抽奖完成后重新挑战游戏',0,'goHome']);
+
+        window.location.href='/game/start';
+    }
+
 </script>
 <%- include('footer') %>
